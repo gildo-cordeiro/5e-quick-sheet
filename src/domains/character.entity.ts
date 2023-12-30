@@ -5,6 +5,7 @@ import { Class } from './class.entity';
 import { Ability } from './ability.entity';
 import { Spell } from './spell.entity';
 import { Inventory } from './inventory.entity';
+import { User } from './user.entity';
 
 @Entity('character')
 export class Character extends BaseEntity {
@@ -52,18 +53,73 @@ export class Character extends BaseEntity {
   charisma: number;
 
   @ManyToMany(() => Ability, (Ability) => Ability.skills)
-  @JoinTable()
+  @JoinTable({
+    name: 'character_skill',
+    joinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'ability_id',
+      referencedColumnName: 'id',
+    },
+  })
   skills: Ability[];
 
   @ManyToMany(() => Spell, (Spell) => Spell.character)
-  @JoinTable()
+  @JoinTable({
+    name: 'character_spell',
+    joinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'spell_id',
+      referencedColumnName: 'id',
+    },
+  })
   spells: Spell[];
 
   @ManyToMany(() => Inventory, (Inventory) => Inventory.character)
-  @JoinTable()
+  @JoinTable({
+    name: 'character_inventory',
+    joinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'inventory_id',
+      referencedColumnName: 'id',
+    },
+  })
   inventory: Inventory[];
 
   @ManyToMany(() => Ability, (Ability) => Ability.specialAbilities)
-  @JoinTable()
+  @JoinTable({
+    name: 'character_special_ability',
+    joinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'ability_id',
+      referencedColumnName: 'id',
+    },
+  })
   specialAbilities: Ability[];
+
+  @ManyToMany(() => User, (User) => User.characters)
+  @JoinTable({
+    name: 'user_character',
+    joinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    
+  })
+  users: User[];
 }

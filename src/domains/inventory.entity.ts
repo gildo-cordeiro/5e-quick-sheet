@@ -23,6 +23,16 @@ export class Inventory extends BaseEntity {
   otherAttributes: string[];
 
   @ManyToMany(() => Character, (Character) => Character.inventory)
-  @JoinTable()
+  @JoinTable({
+    name: 'character_inventory',
+    joinColumn: {
+      name: 'inventory_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+  })
   character: Character[];
 }

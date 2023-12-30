@@ -25,14 +25,44 @@ export class Ability extends BaseEntity {
   abilityType: string;
 
   @ManyToMany(() => Character, (Character) => Character.specialAbilities)
-  @JoinTable()
+  @JoinTable({
+    name: 'character_special_ability',
+    joinColumn: {
+      name: 'ability_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+  })
   specialAbilities: Character[];
 
   @ManyToMany(() => Character, (Character) => Character.skills)
-  @JoinTable()
+  @JoinTable({
+    name: 'character_skill',
+    joinColumn: {
+      name: 'ability_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'character_id',
+      referencedColumnName: 'id',
+    },
+  })
   skills: Character[];
 
   @ManyToMany(() => Class, (Class) => Class.classAbilities)
-  @JoinTable()
+  @JoinTable({
+    name: 'class_ability',
+    joinColumn: {
+      name: 'ability_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'class_id',
+      referencedColumnName: 'id',
+    },
+  })
   classes: Class[];
 }

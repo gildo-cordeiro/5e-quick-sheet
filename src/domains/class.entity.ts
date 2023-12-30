@@ -24,8 +24,18 @@ export class Class extends BaseEntity {
   })
   levelProgression: string;
 
-  @ManyToMany(() => Ability)
-  @JoinTable()
+  @ManyToMany(() => Ability, (Ability) => Ability.classes)
+  @JoinTable({
+    name: 'class_ability',
+    joinColumn: {
+      name: 'class_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'ability_id',
+      referencedColumnName: 'id',
+    },
+  })
   classAbilities: Ability[];
 
   @OneToMany(() => Character, (Character) => Character.class)
