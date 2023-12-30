@@ -16,7 +16,7 @@ export class Character extends BaseEntity {
   })
   name: string;
 
-  @ManyToOne(() => Race, (Race) => Race.Character )
+  @ManyToOne(() => Race, (Race) => Race.Character)
   race: Race;
 
   @ManyToOne(() => Class, (Class) => Class.character)
@@ -119,7 +119,6 @@ export class Character extends BaseEntity {
       name: 'user_id',
       referencedColumnName: 'id',
     },
-    
   })
   users: User[];
 }
